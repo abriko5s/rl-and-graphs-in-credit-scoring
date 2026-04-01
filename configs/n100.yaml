@@ -1,0 +1,90 @@
+# ==================== N=100 Experiment Config ====================
+#
+# Standalone эксперимент: 100 компаний, 1M шагов обучения.
+# Расширение scale sweep из H1 на N=100.
+#
+# Запуск: python run_n100.py
+# Выходные файлы: outputs/n100/
+#
+# Параметры среды — точная копия heavy.yaml с масштабированием под N=100:
+#   num_steps:  1200 (=600 × 100/50, ~12 заявок на компанию)
+#   er_prob:    0.0606 (= 6/(100-1), сохраняет avg_degree ≈ 6 как в BA)
+#   total_timesteps: 1_000_000
+
+# --- Параметры среды ---
+num_companies: 100
+num_sectors: 5
+num_steps: 1200
+interest_rate: 0.08
+
+# --- Генерация графа (graph_type переопределяется в скрипте для каждой топологии) ---
+graph_type: "barabasi_albert"
+ba_edges_per_node: 3
+er_prob: 0.0606
+ws_k: 4
+ws_p: 0.3
+
+# --- Параметры компаний (идентично heavy.yaml) ---
+assets_distribution: "normal"
+assets_range: [300.0, 600.0]
+burn_rate_range: [0.001, 0.004]
+productivity_range: [1.01, 1.05]
+liquidation_cost: 0.2
+
+# --- Параметры кредитных заявок ---
+loan_amount_range: [50.0, 200.0]
+loan_term_range: [3, 8]
+
+# --- Параметры заражения ---
+contagion_fraction: 0.5
+debt_amount_range: [15.0, 60.0]
+
+# --- Механики влияния кредитов ---
+rejection_penalty: 0.04
+loan_liability_passthrough: 0.7
+contagion_leverage_amplifier: 5.0
+default_cost: 50.0
+
+# --- Cooldown ---
+cooldown_max_steps: 100
+
+# --- Шоки (идентично heavy.yaml) ---
+shock_probability: 0.02
+shock_asset_loss: 0.3
+sector_shock_probability: 0.005
+sector_shock_asset_loss: 0.15
+macro_shock_probability: 0.0015
+macro_shock_asset_loss: 0.08
+
+# --- Рисковые секторы ---
+risky_sector_fraction: 0.2
+risky_burn_rate_multiplier: 2.5
+risky_productivity_multiplier: 1.5
+
+# --- Тренировка RL ---
+rl:
+  algorithm: "PPO"
+  total_timesteps: 1000000
+  learning_rate: 0.0003
+  n_steps: 2048
+  batch_size: 128
+  gamma: 0.99
+  gae_lambda: 0.95
+  ent_coef: 0.02
+  n_epochs: 10
+  seed: 42
+
+# --- GNN ---
+gnn:
+  hidden_dim: 64
+  num_layers: 2
+  conv_type: "GCN"
+  dropout: 0.1
+
+# --- CatBoost ---
+# iterations: 1000 (больше данных при N=100 → больше итераций)
+catboost:
+  iterations: 1000
+  learning_rate: 0.05
+  depth: 6
+  approval_threshold: 0.3

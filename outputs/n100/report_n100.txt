@@ -1,0 +1,119 @@
+N=100 Experiment started at: 10:05:16
+Config:     /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/configs/n100.yaml
+Output:     /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100
+Topologies: ['BA']
+Seed:       42
+Skip train: False
+
+
+============================================================
+TOPOLOGY: BA N=100  (barabasi_albert)
+  num_companies=100, num_steps=1200, total_timesteps=1,000,000
+============================================================
+
+[1/7] Training GNN-GCN (PPO) (barabasi_albert)...
+Using cpu device
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+Model saved to /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/barabasi_albert/gnn_gcn_ppo/gnn_gcn_ppo_final
+  Evaluating GNN-GCN (PPO)...
+
+[2/7] Training GNN-GAT (PPO) (barabasi_albert)...
+Using cpu device
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+Model saved to /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/barabasi_albert/gnn_gat_ppo/gnn_gat_ppo_final
+  Evaluating GNN-GAT (PPO)...
+
+[3/7] Training GNN-GCN (A2C) (barabasi_albert)...
+Using cpu device
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+Model saved to /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/barabasi_albert/gnn_gcn_a2c/gnn_gcn_a2c_final
+  Evaluating GNN-GCN (A2C)...
+
+[4/7] Training GNN-GAT (A2C) (barabasi_albert)...
+Using cpu device
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+Model saved to /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/barabasi_albert/gnn_gat_a2c/gnn_gat_a2c_final
+  Evaluating GNN-GAT (A2C)...
+
+[5/7] Training MLP (PPO) (barabasi_albert)...
+Using cpu device
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+Model saved to /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/barabasi_albert/mlp_ppo/mlp_ppo_final
+  Evaluating MLP (PPO)...
+
+[6/7] Training MLP (A2C) (barabasi_albert)...
+Using cpu device
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+Model saved to /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/barabasi_albert/mlp_a2c/mlp_a2c_final
+  Evaluating MLP (A2C)...
+
+[7/7] Training GNN-GCN (PPO, no graph) (barabasi_albert)...
+Using cpu device
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+Model saved to /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/barabasi_albert/gnn_gcn_ppo_no_graph/gnn_gcn_ppo_no_graph_final
+  Evaluating GNN-GCN (PPO, no graph)...
+
+Training CatBoost (barabasi_albert)...
+Collecting dataset (100 episodes)...
+Dataset: 37564 samples, 28.9% positive (default)
+Training CatBoost...
+Model saved to /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/barabasi_albert/catboost/catboost_model.cbm
+  Evaluating CatBoost (static)...
+  Evaluating CatBoost (adaptive)...
+  Evaluating Always Approve...
+  Evaluating Equity Threshold...
+  Evaluating Always Reject...
+
+--- BA N=100 ---
+  Agent                               P&L     ±std  P&L/step   P&L/co  Defaults   Appr%   BorrDR   Sharpe      ROA   Surv%  Casc
+  ---------------------------------------------------------------------------------------------------------------------------
+  GNN-GAT (PPO)                    5689.2  2624.2     4.744    56.89      84.8  17.8%   74.4%    0.435    0.262  15.3%   2.8
+  GNN-GCN (PPO)                    4900.7  2863.2     4.085    49.01      86.2  15.6%   76.8%    0.381    0.236  13.7%   2.5
+  GNN-GCN (PPO, no graph)          3445.1  2730.3     2.886    34.45      90.5  13.9%   84.1%    0.270    0.178   9.5%   2.6
+  MLP (PPO)                        2409.8  2140.3     2.126    24.10      97.6  14.6%   96.3%    0.189    0.137   2.4%   2.6
+  GNN-GAT (A2C)                    2046.5  1830.9     1.715    20.47      97.6  13.4%   96.4%    0.155    0.118   2.4%   2.7
+  MLP (A2C)                        1557.2  1500.6     1.513    15.57      99.5  14.5%   99.3%    0.126    0.100   0.6%   2.8
+  GNN-GCN (A2C)                     428.2  1114.2     0.428     4.28     100.0  13.1%  100.0%    0.031    0.015   0.0%   2.9
+  CatBoost (static)                 231.4  1213.1     0.193     2.31      74.5  10.5%   58.1%    0.017    0.001  25.5%   2.4
+  Always Reject                   -2652.8    45.5    -2.211   -26.53      53.4   0.0%    0.0%   -2.088    0.000  46.6%   2.1
+  CatBoost (adaptive)             -2905.9   606.0    -6.774   -29.06     100.0  25.2%  100.0%   -0.264   -0.263   0.0%   2.4
+  Equity Threshold                -3491.9   342.6   -15.808   -34.92     100.0  33.8%  100.0%   -0.450   -0.375   0.0%   2.6
+  Always Approve                  -4303.3   395.2   -49.223   -43.03     100.0 100.0%  100.0%   -1.035   -0.391   0.0%   2.5
+Saved: /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/n100_BA_pnl.png
+Saved: /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/n100_BA_profit.png
+
+====================================================================================================
+GNN vs MLP COMPARISON (Welch t-test) — N=100:
+  Comparison                               Topology       Left P&L  Right P&L      Delta      p-value
+  ----------------------------------------------------------------------------------------------------
+  GNN-GCN (PPO) vs MLP (PPO)               BA N=100         4900.7     2409.8    +2490.9     0.0045 ***
+  GNN-GAT (PPO) vs MLP (PPO)               BA N=100         5689.2     2409.8    +3279.4     0.0002 ***
+  GNN-GCN (A2C) vs MLP (A2C)               BA N=100          428.2     1557.2    -1129.0     0.0125 **
+  GNN-GAT (A2C) vs MLP (A2C)               BA N=100         2046.5     1557.2     +489.3     0.3735 
+
+  GCN vs GAT:
+  ----------------------------------------------------------------------------------------------------
+  GNN-GAT (PPO) vs GNN-GCN (PPO)           BA N=100         5689.2     4900.7     +788.5     0.3818 
+  GNN-GAT (A2C) vs GNN-GCN (A2C)           BA N=100         2046.5      428.2    +1618.3     0.0025 ***
+
+  ABLATION: GNN-GCN (PPO) с графом vs без:
+  ----------------------------------------------------------------------------------------------------
+  GNN-GCN (PPO) vs GNN-GCN (PPO, no graph) BA N=100         4900.7     3445.1    +1455.6     0.1171 
+
+  Significance: *** p<0.01, ** p<0.05, * p<0.1
+
+====================================================================================================
+GNN ADVANTAGE SUMMARY (N=100 vs N=50 comparison reference):
+  Topology                 Best GNN        P&L     Best MLP        P&L      Delta  Surv% GNN  Surv% MLP
+  ----------------------------------------------------------------------------------------------------
+  BA N=100            GNN-GAT (PPO)     5689.2    MLP (PPO)     2409.8    +3279.4     15.3%      2.4%
+
+All done in 20:26:32 (06:31:48)
+Report saved to: /Users/daniilguz/rl-and-graphs-in-credit-scoring/.claude/worktrees/objective-margulis/outputs/n100/report_n100.txt
